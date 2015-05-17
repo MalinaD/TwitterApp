@@ -7,6 +7,7 @@
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
     public class User : IdentityUser
     {
@@ -14,6 +15,7 @@
         private ICollection<UserLanguage> userLanguages;
         private ICollection<Group> groups;
         private ICollection<Trend> trends;
+        private ICollection<Tweet> tweets;
 
         public User()
         {
@@ -22,7 +24,7 @@
             this.userLanguages = new HashSet<UserLanguage>();
             this.groups = new HashSet<Group>();
             this.trends = new HashSet<Trend>();
-
+            this.tweets = new HashSet<Tweet>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
@@ -36,10 +38,13 @@
         public string FullName { get; set; }
 
         public string AvatarUrl { get; set; }
+        public Location Location { get; set; }
 
         public string Summary { get; set; }
 
         public ContactInfo ContactInfo { get; set; }
+
+        public DateTime DateRegister { get; set; }
 
         public virtual ICollection<Certification> Certifications
         {
@@ -65,6 +70,12 @@
         {
             get { return this.trends; }
             set { this.trends = value; }
+        }
+
+        public virtual ICollection<Tweet> Tweets
+        {
+            get { return this.tweets; }
+            set { this.tweets = value; }
         }
     }
 }

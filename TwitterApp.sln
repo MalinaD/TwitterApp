@@ -27,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A2C523
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mappings", "Mappings", "{6B22EBA8-891E-4CF1-9D01-45D277C1266F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter.Mappings", "Mappings\Twitter.Mappings.csproj", "{B254D3AD-7DA3-4186-B380-4A0F8E0A2232}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,10 @@ Global
 		{FA551E92-63CE-476E-8859-6D34A930DD0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA551E92-63CE-476E-8859-6D34A930DD0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA551E92-63CE-476E-8859-6D34A930DD0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B254D3AD-7DA3-4186-B380-4A0F8E0A2232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B254D3AD-7DA3-4186-B380-4A0F8E0A2232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B254D3AD-7DA3-4186-B380-4A0F8E0A2232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B254D3AD-7DA3-4186-B380-4A0F8E0A2232}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,5 +61,6 @@ Global
 		{C72B3114-8D26-40EE-8F58-EC5A77AF2A17} = {62BE960F-E4E3-4206-A94E-D61C1B6ADE39}
 		{025679DD-B92C-457F-9AE6-FB5F8235C674} = {7D126728-DB9E-4428-87D0-90448B659EA5}
 		{FA551E92-63CE-476E-8859-6D34A930DD0C} = {7D126728-DB9E-4428-87D0-90448B659EA5}
+		{B254D3AD-7DA3-4186-B380-4A0F8E0A2232} = {6B22EBA8-891E-4CF1-9D01-45D277C1266F}
 	EndGlobalSection
 EndGlobal

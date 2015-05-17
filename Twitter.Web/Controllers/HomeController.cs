@@ -1,8 +1,10 @@
 ﻿namespace Twitter.Web.Controllers
 {
     using System.Web.Mvc;
+    using System.Web;
+    using System.Linq;
+    using System.Linq.Expressions;
     using Twitter.Data;
-    using System.Web.Mvc.Expressions;
 
     public class HomeController : BaseController
     {
@@ -17,21 +19,21 @@
            // {
            //     this.ViewBag.UserName = this.UserProfile.UserName;
            // }
-            
+            ViewBag.Message = "This is my version of Twitter app maked with ASP.NET MVC";
             return this.View();
         }
 
         public ActionResult About()
         {
-            
-            return this.RedirectToAction(x => x.Contact());
+            return this.View();
+            //return this.RedirectToAction(x => x.Contact());
         }
 
-        public ActionResult Contact()
+        public ActionResult Tweets()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "All tweets below";
 
-            return View();
+            return this.View();
         }
     }
 }

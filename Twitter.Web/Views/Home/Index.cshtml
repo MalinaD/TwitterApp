@@ -1,9 +1,86 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Microsoft.AspNet.Identity;
+@*@using PagedList.Mvc;
+    @model PagedList.IPagedList<Twitter.Models.User>*@
+@*@model  IEnumerable<Twitter.Web.ViewModels.Tweets.TweetViewModel>*@
+@model Twitter.Models.Tweet
+
+@{
+    ViewBag.Title = "Home";
 }
 
 <div class="jumbotron">
     <h1>Twitter</h1>
     <p class="lead">ASP.NET MVC Web Application.</p>
 </div>
+
+
+
+<div class="row home-container">
+    @*LEFT SIDE BAR*@
+    <div class="user-panel-container col-md-3">
+    </div>
+    @*CENTER PAGE WITH TWITTS*@
+    <div class="home-page-twitts-containter col-md-6">
+        @Html.DisplayForModel()
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TakenDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TakenDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Author)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Author)
+            </dd>
+
+        </dl>
+
+        @*PAGINATION*@
+        @*<div class="center">
+                @Html.PagedListPager(Model, id => Url.Action("Index", new { id }))
+            </div>*@
+        <p>
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+    @*RIGHT SIDE BAR*@
+    <div class="left-panel-container col-md-3">
+        @Html.Partial("_RightSidePanelPartial")
+    </div>
+</div>
+
+
+
 

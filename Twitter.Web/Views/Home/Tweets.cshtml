@@ -1,0 +1,16 @@
+﻿@model Twitter.Web.ViewModels.Tweets.TweetViewModel
+
+@{
+    ViewBag.Title = "Tweets";
+}
+
+<h2>@Model.Title</h2>
+
+<div>@Model.Description</div>
+<div>
+    <input type="button" value="favorite" />
+    <input type="button" value="retweet" />
+    <input type="button" value="report" />
+    <input type="button" value="reply" />
+    <input type="button" value="share" />
+</div>
