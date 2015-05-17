@@ -1,23 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace Twitter.Web.Controllers
+﻿namespace Twitter.Web.Controllers
 {
-    public class HomeController : Controller
+    using System.Web.Mvc;
+    using Twitter.Data;
+    using System.Web.Mvc.Expressions;
+
+    public class HomeController : BaseController
     {
+        public HomeController(ITwitterData data)
+            :base(data)
+        {
+
+        }
         public ActionResult Index()
         {
-            return View();
+            //if (this.UserProfile != null)
+           // {
+           //     this.ViewBag.UserName = this.UserProfile.UserName;
+           // }
+            
+            return this.View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            
+            return this.RedirectToAction(x => x.Contact());
         }
 
         public ActionResult Contact()

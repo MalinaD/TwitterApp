@@ -50,7 +50,6 @@ namespace Twitter.Web.Models
     {
         [Required]
         [Display(Name = "Username")]
-        [EmailAddress]
         public string UserName { get; set; }
 
         [Required]
