@@ -7,6 +7,7 @@
     using System;
     using System.Linq;
     using System.Web.Routing;
+    using System.Web;
 
     public class BaseController : Controller
     {
@@ -26,6 +27,16 @@
 
         protected ITwitterData Data { get; private set; }
         protected User UserProfile { get; private set; }
+
+        protected string ConvertImageToBase64String(HttpPostedFileBase image)
+        {
+            var stream = image.InputStream;
+            byte[] fileBytes = new byte[stream.Length];
+            int byteCount = stream.Read(fileBytes, 0, (int)stream.Length);
+            string fileContent = Convert.ToBase64String(fileBytes);
+
+            return "data:image/" + image.ContentType + ";" + "base64, " + fileContent;
+        }
 
         protected override IAsyncResult BeginExecute(RequestContext requestContext, AsyncCallback callback, object state)
         {

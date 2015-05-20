@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity;
-@*@using PagedList.Mvc;
-    @model PagedList.IPagedList<Twitter.Models.User>*@
-@*@model  IEnumerable<Twitter.Web.ViewModels.Tweets.TweetViewModel>*@
-@model Twitter.Models.Tweet
+@using PagedList;
+@using PagedList.Mvc;
+
+@model  IEnumerable<Twitter.Models.Tweet>
+@*@model PagedList.IPagedList<Twitter.Web.ViewModels.Tweets.TweetViewModel>*@
+
 
 @{
     ViewBag.Title = "Home";
@@ -22,50 +24,65 @@
     @*CENTER PAGE WITH TWITTS*@
     <div class="home-page-twitts-containter col-md-6">
         @Html.DisplayForModel()
+@if (this.User.Identity.IsAuthenticated) {
 
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
+        <table class="dl-horizontal">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
 
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
+                <th>
+                    @Html.DisplayNameFor(model => model.TakenDate)
+                </th>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.TakenDate)
-            </dt>
+                <th>
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
 
-            <dd>
-                @Html.DisplayFor(model => model.TakenDate)
-            </dd>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+            </tr>
+ @foreach (var model in Model) { 
+     <tr>
+         <td>
+             @Html.DisplayFor(modelItem => model.Title)
+         </td>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Location)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Location)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Author)
-            </dt>
+         <td>
+             @Html.DisplayFor(modelItem => model.Description)
+         </td>
 
-            <dd>
-                @Html.DisplayFor(model => model.Author)
-            </dd>
 
-        </dl>
 
+         <td>
+             @Html.DisplayFor(modelItem => model.TakenDate)
+         </td>
+
+
+
+         <td>
+             @Html.DisplayFor(modelItem => model.Location)
+         </td>
+
+
+
+         <td>
+             @Html.DisplayFor(modelItem => model.Author)
+         </td>
+
+     </tr>
+            
+        </table>
+}
         @*PAGINATION*@
         @*<div class="center">
                 @Html.PagedListPager(Model, id => Url.Action("Index", new { id }))
@@ -75,6 +92,7 @@
             @Html.ActionLink("Back to List", "Index")
         </p>
     </div>
+}
     @*RIGHT SIDE BAR*@
     <div class="left-panel-container col-md-3">
         @Html.Partial("_RightSidePanelPartial")

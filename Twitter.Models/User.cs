@@ -8,6 +8,7 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class User : IdentityUser
     {
@@ -17,8 +18,15 @@ using System;
         private ICollection<Trend> trends;
         private ICollection<Tweet> tweets;
 
+        private ICollection<User> followers;
+        private ICollection<User> following;
+
+
+
         public User()
         {
+            this.followers = new HashSet<User>();
+            this.following = new HashSet<User>();
             this.ContactInfo = new ContactInfo();
             this.certifications = new HashSet<Certification>();
             this.userLanguages = new HashSet<UserLanguage>();
@@ -38,15 +46,23 @@ using System;
             return userIdentity;
         }
 
+        [Required]
+        [MinLength(2)]
+        [MaxLength(50)]
         public string FullName { get; set; }
 
         public string AvatarUrl { get; set; }
+
         public Location Location { get; set; }
 
+        [MinLength(2)]
+        [MaxLength(140)]
         public string Summary { get; set; }
 
         public ContactInfo ContactInfo { get; set; }
 
+        [Required]
+        [DataType(DataType.DateTime)]
         public DateTime DateRegister { get; set; }
 
         public virtual ICollection<Certification> Certifications
@@ -75,10 +91,23 @@ using System;
             set { this.trends = value; }
         }
 
+        [InverseProperty("Author")]
         public virtual ICollection<Tweet> Tweets
         {
             get { return this.tweets; }
             set { this.tweets = value; }
+        }
+
+        public virtual ICollection<User> Followers
+        {
+            get { return this.followers; }
+            set { this.followers = value; }
+        }
+
+        public virtual ICollection<User> Following
+        {
+            get { return this.following; }
+            set { this.following = value; }
         }
 
         public class Message

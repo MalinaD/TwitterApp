@@ -18,7 +18,7 @@
                     Description = x.Description,
                     Location = x.Location,
                     TakenDate = x.TakenDate,
-                    Author = x.Author
+                    AuthorId = x.Author.Id
                 };
             }
         }
@@ -31,6 +31,6 @@
 
         public DateTime TakenDate { get; set; }
 
-        public virtual User Author { get; set; }
+        public string AuthorId { get; set; }
     }
 }

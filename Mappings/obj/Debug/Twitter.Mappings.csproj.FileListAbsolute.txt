@@ -2,4 +2,7 @@ C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\bin\Debug\Mappings.dll
 C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\bin\Debug\Mappings.pdb
 C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\obj\Debug\Mappings.dll
 C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\obj\Debug\Mappings.pdb
-C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\obj\Debug\Twitter.Mappings.csprojResolveAssemblyReference.cache
+C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\bin\Debug\PagedList.dll
+C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\bin\Debug\PagedList.Mvc.dll
+C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\bin\Debug\PagedList.xml
+C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\bin\Debug\PagedList.Mvc.xml
