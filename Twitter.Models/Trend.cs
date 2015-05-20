@@ -15,7 +15,7 @@
 
         public Location Location { get; set; }
 
-        public DateTime TakenDate { get; set; }
+        public DateTime? TakenDate { get; set; }
 
         [Required]
         public virtual User Author { get; set; }

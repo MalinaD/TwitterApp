@@ -25,7 +25,10 @@ using System;
             this.groups = new HashSet<Group>();
             this.trends = new HashSet<Trend>();
             this.tweets = new HashSet<Tweet>();
+            this.Messages = new HashSet<Message>();
         }
+
+        public virtual ICollection<Message> Messages { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
@@ -76,6 +79,13 @@ using System;
         {
             get { return this.tweets; }
             set { this.tweets = value; }
+        }
+
+        public class Message
+        {
+            public int Id { get; set; }
+            public string MessageText { get; set; }
+            public DateTime DateCreated { get; set; }
         }
     }
 }

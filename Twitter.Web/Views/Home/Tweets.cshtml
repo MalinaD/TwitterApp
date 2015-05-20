@@ -1,16 +1,53 @@
-﻿@model Twitter.Web.ViewModels.Tweets.TweetViewModel
+﻿@model ICollection<Twitter.Web.ViewModels.Tweets.TweetViewModel>
 
 @{
     ViewBag.Title = "Tweets";
 }
 
-<h2>@Model.Title</h2>
 
-<div>@Model.Description</div>
-<div>
-    <input type="button" value="favorite" />
-    <input type="button" value="retweet" />
-    <input type="button" value="report" />
-    <input type="button" value="reply" />
-    <input type="button" value="share" />
+<div class="row home-container">
+    <div class="col-md-6">
+@if (this.User.Identity.IsAuthenticated)
+{
+    <div>
+        <input type="button" value="favorite" class="btn btn-default" />
+        <input type="button" value="retweet" class="btn btn-default" />
+        <input type="button" value="report" class="btn btn-default" />
+        <input type="button" value="reply" class="btn btn-default" />
+        <input type="button" value="share" class="btn btn-default" />
+    </div>
+}
+        @*DISPLAY POST NEW TWEET FORM*@
+
+        @*DISPLAY ALL TWEETS*@
+       
+        
+        @*@if (@Model.Count != 0)
+        {
+            foreach (var item in Model)
+            {
+                <div>
+                    <div>
+                        <b class="media-heading">@item.Author</b>
+                        <i style="font-size: 8px;" class="glyphicon glyphicon-star"></i>
+                        <span>@item.TakenDate</span>
+                    </div>
+                    <div>
+                        @item.Description
+                    </div>
+                    <hr />
+                </div>
+            }
+    @*PAGINATION*@
+
+        @*}
+        else
+        {
+
+              <div class="center"><h4 class="text-center">You're not following anyone yet.</h4></div>
+        }*@
+    </div>
+
 </div>
+
+}

@@ -60,11 +60,11 @@ namespace Twitter.Web
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "125407170240-fhb27s8k7mmga7nthj9qing4vi69hll4.apps.googleusercontent.com",
+                ClientSecret = "muqJwp8F1lb0qrMKGEgaU75e"
+            });
         }
     }
 }

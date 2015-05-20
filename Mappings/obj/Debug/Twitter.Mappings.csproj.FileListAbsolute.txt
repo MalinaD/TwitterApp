@@ -1,0 +1,5 @@
+C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\bin\Debug\Mappings.dll
+C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\bin\Debug\Mappings.pdb
+C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\obj\Debug\Mappings.dll
+C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\obj\Debug\Mappings.pdb
+C:\Users\malina\Documents\GitHub\TwitterApp\Mappings\obj\Debug\Twitter.Mappings.csprojResolveAssemblyReference.cache
