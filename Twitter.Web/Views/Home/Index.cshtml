@@ -2,8 +2,8 @@
 @using PagedList;
 @using PagedList.Mvc;
 
-@model  IEnumerable<Twitter.Models.Tweet>
-@*@model PagedList.IPagedList<Twitter.Web.ViewModels.Tweets.TweetViewModel>*@
+@*@model  IEnumerable<Twitter.Models.Tweet>*@
+@model PagedList.IPagedList<Twitter.Web.ViewModels.Tweets.TweetViewModel>
 
 
 @{
@@ -25,68 +25,21 @@
     <div class="home-page-twitts-containter col-md-6">
         @Html.DisplayForModel()
 @if (this.User.Identity.IsAuthenticated) {
-
-
-        <table class="dl-horizontal">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.TakenDate)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.Location)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.Author)
-                </th>
-            </tr>
-
-     <tr>
-@foreach (var model in Model)
-{
-         <td>
-             @Html.DisplayFor(modelItem => model.Title)
-         </td>
-
-         <td>
-             @Html.DisplayFor(modelItem => model.Description)
-         </td>
-
-         <td>
-             @Html.DisplayFor(modelItem => model.TakenDate)
-         </td>
-
-         <td>
-             @Html.DisplayFor(modelItem => model.Location)
-         </td>
-
-         <td>
-             @Html.DisplayFor(modelItem => model.Author)
-         </td>
-
-         <td>
-             @Html.ActionLink("Edit", "Edit", new { id = model.Id }) |
-             @Html.ActionLink("Details", "Details", new { id = model.Id }) |
-             @Html.ActionLink("Delete", "Delete", new { id = model.Id })
-         </td>
-}
-     </tr>
-            
-        </table>
-
+    @Html.DisplayForModel()
+    if (@Model.Count == 0)
+    {
+        <div class="center"><h4 class="text-center">You're not following anyone yet.</h4></div>
+    }
+    else
+    {
         @*PAGINATION*@
-        @*<div class="center">
-                @Html.PagedListPager(Model, id => Url.Action("Index", new { id }))
-            </div>*@
+        <div class="center">
+            @Html.PagedListPager(Model, id => Url.Action("Index", new { id }))
+        </div>
+    }
+
+}
+
         <p>
             @Html.ActionLink("Back to List", "Index")
         </p>

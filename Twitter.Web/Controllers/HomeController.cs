@@ -8,6 +8,9 @@
     using System.Web.Mvc;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Data.Entity;
+    using System.IO;
+    using AutoMapper.QueryableExtensions;
     using Twitter.Data;
     using Twitter.Models;
     using PagedList;
@@ -34,22 +37,29 @@
             }
             ViewBag.Message = "This is my version of Twitter app maked with ASP.NET MVC";
 
-            var tweets = this.Data.Tweets.All()
-                .Select(TweetViewModel.ViewModel)
-                .OrderByDescending(m => m.TakenDate);
 
+            var tweetsFollowers = this.UserProfile.Following
+                .SelectMany(m => m.Tweets)
+                .AsQueryable().Project().To<TweetViewModel>();
+
+
+            var tweets = this.Data.Tweets.All()
+                .Include(t => t.Author)
+                .OrderByDescending(t => t.TakenDate)
+                .Project()
+                .To<TweetViewModel>();
 
             if (tweets == null)
             {
                 return this.HttpNotFound("Tweet does not exist");
             }
 
-            int sizeOfPage = PAGE_SIZE;
-            int pageNumber = pageSize ?? 1;
+            //int sizeOfPage = PAGE_SIZE;
+            //int pageNumber = pageSize ?? 1;
 
             //PagedList<TweetViewModel> model = new PagedList<TweetViewModel>(tweets, pageNumber, sizeOfPage);
-           
-            return this.View();
+
+            return this.View(tweets.ToList());
         }
 
         public ActionResult About()
@@ -129,8 +139,10 @@
             int pageNumber = pageSize ?? 1;
 
             PagedList<TweetViewModel> model = new PagedList<TweetViewModel>(tweets, pageNumber, sizeOfPage);
-            return this.View();
+            return this.View(model.ToList());
         }
+
+
 
         [HttpGet]
         public ActionResult PageNotFound()

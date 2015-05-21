@@ -8,6 +8,7 @@
     using System.Net;
     using System.Web;
     using System.Web.Mvc;
+    using Microsoft.AspNet.Identity;
     using Twitter.Data;
     using Twitter.Models;
     using Twitter.Web.ViewModels.Tweets;
@@ -34,8 +35,21 @@
             {
                 return this.HttpNotFound("Tweet does not exist");
             }
+            else
+            {
+                var viewModel = new TweetViewModel
+                {
+                    Title = tweet.Title,
+                    Description = tweet.Description,
+                    TakenDate = tweet.TakenDate,
+                    AuthorId = tweet.AuthorId
+                };
 
-            return this.View(tweet);
+                List<TweetViewModel> viewModelList = new List<TweetViewModel>();
+                viewModelList.Add(viewModel);
+                return this.View(viewModelList.ToList());
+            }
+
 
         }
 
@@ -58,10 +72,55 @@
         }
 
         // GET: Tweets/Create
+        [HttpGet]
         public ActionResult Create()
         {
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FullName");
-            return View();
+
+            //var model = new TweetViewModel();
+
+           return this.View();
+
+        }
+
+        [HttpPost]
+        public ActionResult Create(TweetViewModel model)
+        {
+            //return null;
+            if (ModelState.IsValid)
+            {
+                model.AuthorId = this.User.Identity.GetUserId();
+                var tweet = new Tweet() 
+                {
+                    AuthorId = model.AuthorId,
+                    Title = model.Title, 
+                    TakenDate= model.TakenDate,
+                    Description = model.Description 
+                };
+
+                //db.SaveChanges();
+                try
+                {
+                    this.UserProfile.Tweets.Add(tweet);
+                    this.Data.Tweets.Add(tweet);
+                    this.Data.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+                    return this.RedirectToAction("Index", "Home");
+                }   
+                this.TempData["message"] = "Tweet added successfylly.";
+                this.TempData["isMessageSuccess"] = true;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            this.TempData["message"] = "There is a problem with the creation of this tweet. Please try again later.";
+            this.TempData["isMessageSuccess"] = false;
+
+            //ViewBag.AuthorId = new SelectList(db.Users, "Id", "FullName", model.AuthorId);
+            return View("Tweets/_CreateTweet", model);
         }
 
         // GET: Tweets/Edit/5

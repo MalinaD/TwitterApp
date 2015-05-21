@@ -1,2 +1,18 @@
 ﻿@model Twitter.Models.Tweet
 
+@*@using (Html.BeginForm("Create", "Tweets", FormMethod.Post))
+{
+    @Html.EditorForModel()
+}*@
+
+<form action="/Tweets/Create" method="post">
+    <label for="title">Tweet Title</label>
+    <input id="title" type="text" name="title" value="" />
+
+    <label for="description">Tweet description</label>
+    <input id="description" type="text" name="description" value="" />
+
+
+    <input type="submit" name="submit" value="Create Post" />
+</form>
+
