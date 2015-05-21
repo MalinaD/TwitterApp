@@ -1,12 +1,54 @@
-﻿@model Twitter.Web.ViewModels.Tweets.TweetViewModel
+﻿@model  IEnumerable<Twitter.Models.Tweet>
 
-<h1>@Model.Title</h1>
+@{
+    ViewBag.Title = "Tweets home";
+}
 
-<div>@Model.Description</div>
-<div>
+<h2> My tweets</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create");
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Author.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TakenDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TakenDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@*<div>
     <input type="button" value="favorite" />
     <input type="button" value="retweet" />
     <input type="button" value="report" />
     <input type="button" value="reply" />
     <input type="button" value="share" />
-</div>
+</div>*@

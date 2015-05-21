@@ -37,12 +37,19 @@
             var tweets = this.Data.Tweets.All()
                 .Select(TweetViewModel.ViewModel)
                 .OrderByDescending(m => m.TakenDate);
+
+
+            if (tweets == null)
+            {
+                return this.HttpNotFound("Tweet does not exist");
+            }
+
             int sizeOfPage = PAGE_SIZE;
             int pageNumber = pageSize ?? 1;
 
-            PagedList<TweetViewModel> model = new PagedList<TweetViewModel>(tweets, pageNumber, sizeOfPage);
+            //PagedList<TweetViewModel> model = new PagedList<TweetViewModel>(tweets, pageNumber, sizeOfPage);
            
-            return this.View(model);
+            return this.View();
         }
 
         public ActionResult About()

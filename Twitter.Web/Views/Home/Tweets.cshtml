@@ -1,53 +1,47 @@
-﻿@model ICollection<Twitter.Web.ViewModels.Tweets.TweetViewModel>
+﻿@model  IEnumerable<Twitter.Models.Tweet>
 
 @{
-    ViewBag.Title = "Tweets";
+    ViewBag.Title = "Tweets home";
 }
 
+<h2> My tweets</h2>
 
-<div class="row home-container">
-    <div class="col-md-6">
-@if (this.User.Identity.IsAuthenticated)
-{
-    <div>
-        <input type="button" value="favorite" class="btn btn-default" />
-        <input type="button" value="retweet" class="btn btn-default" />
-        <input type="button" value="report" class="btn btn-default" />
-        <input type="button" value="reply" class="btn btn-default" />
-        <input type="button" value="share" class="btn btn-default" />
-    </div>
-}
-        @*DISPLAY POST NEW TWEET FORM*@
+<p>
+    @Html.ActionLink("Create New", "Create");
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Author.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TakenDate)
+        </th>
+        <th></th>
+    </tr>
 
-        @*DISPLAY ALL TWEETS*@
-       
-        
-        @*@if (@Model.Count != 0)
-        {
-            foreach (var item in Model)
-            {
-                <div>
-                    <div>
-                        <b class="media-heading">@item.Author</b>
-                        <i style="font-size: 8px;" class="glyphicon glyphicon-star"></i>
-                        <span>@item.TakenDate</span>
-                    </div>
-                    <div>
-                        @item.Description
-                    </div>
-                    <hr />
-                </div>
-            }
-    @*PAGINATION*@
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TakenDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
-        @*}
-        else
-        {
-
-              <div class="center"><h4 class="text-center">You're not following anyone yet.</h4></div>
-        }*@
-    </div>
-
-</div>
-
+</table>
 

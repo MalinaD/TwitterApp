@@ -261,7 +261,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Tweets.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
@@ -292,6 +291,11 @@
     <Content Include="Views\Home\_RightSidePanelPartial.cshtml" />
     <Content Include="Views\Home\CreateAdminRole.cshtml" />
     <Content Include="Views\Home\AdminPage.cshtml" />
+    <Content Include="Views\Tweets\Details.cshtml" />
+    <Content Include="Views\Home\Tweets.cshtml" />
+    <Content Include="Views\Tweets\Edit.cshtml" />
+    <Content Include="Views\Tweets\Create.cshtml" />
+    <Content Include="Views\Tweets\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
