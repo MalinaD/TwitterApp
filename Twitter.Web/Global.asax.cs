@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Twitter.Web.App_Start;
+using Mappings;
+using AutoMapper;
 
 namespace Twitter.Web
 {
@@ -20,6 +18,9 @@ namespace Twitter.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ViewEnginesConfig.RegisterViewEngines(ViewEngines.Engines);
+
+            var autoMapperConfig = new AutoMapperConfig();
+            autoMapperConfig.Execute();
         }
     }
 }

@@ -28,6 +28,7 @@
         {
             var tweet = this.Data.Tweets.All()
               // .Where(x => x.Author.UserName == username)
+              .Include(x => x.Author)
                .Select(TweetViewModel.ViewModel)
                .FirstOrDefault();
 

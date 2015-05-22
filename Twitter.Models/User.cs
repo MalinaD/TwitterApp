@@ -16,23 +16,29 @@ using System;
         private ICollection<UserLanguage> userLanguages;
         private ICollection<Group> groups;
         private ICollection<Trend> trends;
+
         private ICollection<Tweet> tweets;
+        private ICollection<Tweet> favoritedTweets;
+        private ICollection<Tweet> retweetedTweets;
 
         private ICollection<User> followers;
-        private ICollection<User> following;
+        private ICollection<User> followings;
+
 
 
 
         public User()
         {
             this.followers = new HashSet<User>();
-            this.following = new HashSet<User>();
+            this.followings = new HashSet<User>();
             this.ContactInfo = new ContactInfo();
             this.certifications = new HashSet<Certification>();
             this.userLanguages = new HashSet<UserLanguage>();
             this.groups = new HashSet<Group>();
             this.trends = new HashSet<Trend>();
             this.tweets = new HashSet<Tweet>();
+            this.favoritedTweets = new HashSet<Tweet>();
+            this.retweetedTweets = new HashSet<Tweet>();
             this.Messages = new HashSet<Message>();
         }
 
@@ -98,6 +104,18 @@ using System;
             set { this.tweets = value; }
         }
 
+        public virtual ICollection<Tweet> FavoritedTweets
+        {
+            get { return this.favoritedTweets; }
+            set { this.favoritedTweets = value; }
+        }
+
+        public virtual ICollection<Tweet> ReTweetedTweets
+        {
+            get { return this.retweetedTweets; }
+            set { this.retweetedTweets = value; }
+        }
+
         public virtual ICollection<User> Followers
         {
             get { return this.followers; }
@@ -106,8 +124,8 @@ using System;
 
         public virtual ICollection<User> Following
         {
-            get { return this.following; }
-            set { this.following = value; }
+            get { return this.followings; }
+            set { this.followings = value; }
         }
 
         public class Message

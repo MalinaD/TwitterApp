@@ -8,31 +8,34 @@
     using Twitter.Models;
     using Twitter.Web.ViewModels.Tweets;
     using Twitter.Web.ViewModels.Common;
+    using System.Web.Mvc;
 
     public class UserViewModel
     {
-        public static Expression<Func<User, UserViewModel>> ViewModel 
-        { 
+        public static Expression<Func<User, UserViewModel>> ViewModel
+        {
             get
             {
-                return x => new UserViewModel{
+                return x => new UserViewModel
+                {
                     UserName = x.UserName,
                     AvatarUrl = x.AvatarUrl,
                     ContactInfo = x.ContactInfo,
                     FullName = x.FullName,
                     Summary = x.Summary,
                     Email = x.Email,
-                    DateRegister = x.DateRegister,
-                    Certifications = x.Certifications.AsQueryable().Select(CertificationViewModel.ViewModel),
-                    Tweets = x.Tweets.AsQueryable().Select(TweetViewModel.ViewModel),
-                    Languages = x.Languages.AsQueryable().Select(LanguageViewModel.ViewModel)
+                    DateRegister = x.DateRegister//,
+                    //Tweets = x.Tweets.AsQueryable().Select(TweetViewModel.ViewModel),
+                    //Languages = x.Languages.AsQueryable().Select(LanguageViewModel.ViewModel)
                 };
-            } 
+            }
         }
 
         public string Id { get; set; }
 
         [Display(Name = "Username")]
+        [StringLength(20, MinimumLength= 4, ErrorMessage = "The username should be at least 4 symbols long.")]
+        [Remote("CheckForDuplication","Validation")]
         public string UserName { get; set; }
 
         [Display(Name = "Fullname")]
@@ -46,11 +49,15 @@
 
         public ContactInfo ContactInfo { get; set; }
 
-        public  IEnumerable<CertificationViewModel> Certifications { get; set; }
+        public ICollection<TweetViewModel> Tweets { get; set; }
+        public ICollection<TweetViewModel> FavoritedTweets { get; set; }
+        public ICollection<TweetViewModel> RetweetedTweets { get; set; }
 
-        public IEnumerable<TweetViewModel> Tweets { get; set; }
+        public ICollection<LanguageViewModel> Languages { get; set; }
 
-        public IEnumerable<LanguageViewModel> Languages { get; set; }
+        public virtual ICollection<UserViewModel> Followers { get; set; }
+
+        public virtual ICollection<UserViewModel> Followings { get; set; }
         
     }
 }

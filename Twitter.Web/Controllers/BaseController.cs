@@ -25,8 +25,16 @@
             this.UserProfile = userProfile;
         }
 
-        protected ITwitterData Data { get; private set; }
-        protected User UserProfile { get; private set; }
+        protected ITwitterData Data 
+        {
+            get { return this.data; }
+            private set { this.data = value; }
+        }
+        protected User UserProfile
+        {
+            get { return this.userProfile; }
+            private set { this.userProfile = value; }
+        }
 
         protected string ConvertImageToBase64String(HttpPostedFileBase image)
         {
@@ -43,8 +51,11 @@
             if (requestContext.HttpContext.User.Identity.IsAuthenticated)
             {
                 var username = requestContext.HttpContext.User.Identity.Name;
-                var user = this.Data.Users.All().FirstOrDefault(x => x.UserName == username);
+                var user = this.Data.Users.All()
+                    .FirstOrDefault(x => x.UserName == username);
+
                 this.UserProfile = user;
+                this.ViewBag.UserProfile = user;
             }
             
             return base.BeginExecute(requestContext, callback, state);

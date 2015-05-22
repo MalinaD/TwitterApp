@@ -10,6 +10,10 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Twitter.Web.Models;
 using Twitter.Models;
+using Twitter.Data;
+using System.Web.Security;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Twitter.Web.Controllers
 {
@@ -17,6 +21,7 @@ namespace Twitter.Web.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
+        private TwitterContext db = new TwitterContext();
 
         public AccountController()
         {
@@ -155,7 +160,14 @@ namespace Twitter.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Username, Email = model.Email, DateRegister= DateTime.Now };
+                var user = new User 
+                { 
+                    UserName = model.Username, 
+                    Email = model.Email, 
+                    FullName = model.Fullname,
+                    DateRegister= DateTime.Now 
+                };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -168,6 +180,7 @@ namespace Twitter.Web.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
+
                 }
                 AddErrors(result);
             }
@@ -175,6 +188,49 @@ namespace Twitter.Web.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        public async Task<ActionResult> CheckForDuplication(string username)
+        {
+            IList<User> users = db.Users.ToArray();
+            User user = users
+               .Where(u => u.UserName == username).Single();
+
+            if (user != null)
+            {
+                return Json("Sorry, this name already exists", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        ////search for users in db
+        //public async Task<ActionResult>  RemoteValidation (User us)
+        //{
+        //    return View(us);      
+        //}
+
+        //[HttpPost]
+        //public async Task<ActionResult>  JsonResult CheckForDuplication(string UserName)
+        //{
+        //    var data = Membership.GetUser(UserName);
+            
+        //    //var data = db.Users
+        //    //    .Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase))
+        //    //    .FirstOrDefault();
+
+        //    //if (data != null)
+        //    //{
+        //    //    return Json("Sorry, this name already exists", JsonRequestBehavior.AllowGet);
+        //    //}
+        //    //else
+        //    //{
+        //    //    return Json(true, JsonRequestBehavior.AllowGet);
+        //    //}
+        //    return Json(data == null);
+
+        //}
 
         //
         // GET: /Account/ConfirmEmail

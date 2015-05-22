@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace Twitter.Web.Models
 {
     public class ExternalLoginConfirmationViewModel
@@ -70,7 +71,12 @@ namespace Twitter.Web.Models
 
         [Required]
         [Display(Name = "Username")]
+        //[System.Web.Mvc.Remote("CheckForDuplication", "Account", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name.")]
         public string Username { get; set; }
+
+        [Required]
+        [Display(Name = "Fullname")]
+        public string Fullname { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -82,6 +88,8 @@ namespace Twitter.Web.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

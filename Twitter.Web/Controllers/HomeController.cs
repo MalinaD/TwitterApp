@@ -14,8 +14,9 @@
     using Twitter.Data;
     using Twitter.Models;
     using PagedList;
-    using Twitter.Web.ViewModels.Tweets;
+    using Twitter.Web.ViewModels;
     using System.Collections.Generic;
+    using Twitter.Web.ViewModels.Tweets;
 
     public class HomeController : BaseController
     {
@@ -37,29 +38,35 @@
             }
             ViewBag.Message = "This is my version of Twitter app maked with ASP.NET MVC";
 
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var tweetsFollowers = this.UserProfile
+                            .Following
+                            .SelectMany(m => m.Tweets)
+                            .OrderByDescending(m => m.TakenDate)
+                            .AsQueryable().Project().To<TweetViewModel>();
 
-            var tweetsFollowers = this.UserProfile.Following
-                .SelectMany(m => m.Tweets)
-                .AsQueryable().Project().To<TweetViewModel>();
+                return this.View(tweetsFollowers.ToList());
+            }
+
 
 
             var tweets = this.Data.Tweets.All()
                 .Include(t => t.Author)
-                .OrderByDescending(t => t.TakenDate)
-                .Project()
-                .To<TweetViewModel>();
+                .Select(TweetViewModel.ViewModel)
+                .OrderByDescending(t => t.TakenDate);
 
-            if (tweets == null)
+            if (tweets.Count() == null)
             {
                 return this.HttpNotFound("Tweet does not exist");
             }
 
-            //int sizeOfPage = PAGE_SIZE;
-            //int pageNumber = pageSize ?? 1;
+            int sizeOfPage = PAGE_SIZE;
+            int pageNumber = pageSize ?? 1;
 
-            //PagedList<TweetViewModel> model = new PagedList<TweetViewModel>(tweets, pageNumber, sizeOfPage);
+            PagedList<TweetViewModel> model = new PagedList<TweetViewModel>(tweets, pageNumber, sizeOfPage);
 
-            return this.View(tweets.ToList());
+            return this.View(model.ToList());
         }
 
         public ActionResult About()
@@ -133,7 +140,7 @@
                     AuthorId = m.Author.Id
                     
                 });
-           
+
 
             int sizeOfPage = PAGE_SIZE;
             int pageNumber = pageSize ?? 1;
