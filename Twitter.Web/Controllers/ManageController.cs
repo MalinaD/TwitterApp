@@ -1,16 +1,17 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Twitter.Web.Models;
-using Twitter.Models;
-
-namespace Twitter.Web.Controllers
+﻿namespace Twitter.Web.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Twitter.Web.Models;
+    using Twitter.Models;
+    using ViewModels;
+
     [Authorize]
     public class ManageController : Controller
     {

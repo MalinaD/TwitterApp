@@ -4,16 +4,13 @@
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;
     using System;
-    using System.Web;
-    using System.Web.Mvc;
     using System.Linq;
     using System.Data.Entity;
-    using AutoMapper.QueryableExtensions;
+    using System.Web;
+    using System.Web.Mvc;
     using Twitter.Data;
     using Twitter.Models;
-    using PagedList;
-    using System.Collections.Generic;
-    using Twitter.Web.ViewModels.Tweets;
+    using ViewModels.Tweets;
 
     public class HomeController : BaseController
     {   
@@ -26,22 +23,18 @@
         [HttpGet]
         public ActionResult Index()
         {
-            if (this.UserProfile != null)
+            if (this.User.Identity.IsAuthenticated)
             {
                 //this.ViewBag.UserName = this.UserProfile.UserName;
                 ViewBag.Message = "This is my version of Twitter app maked with ASP.NET MVC";
                 return this.RedirectToAction("Index", "Home");
             }
-            //else
-            //{
-            //    return this.RedirectToAction("PageError","Home");
-            //}
+            else
+            {
+                return this.RedirectToAction("PageError", "Home");
+            }
 
-            //var tweets = this.Data.Tweets.All()
-            //    .Include(t => t.Author)
-            //    .Select(TweetViewModel.ViewModel)
-            //    .OrderByDescending(t => t.TakenDate);
-
+            
             return this.View();
         }
 

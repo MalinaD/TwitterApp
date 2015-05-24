@@ -4,13 +4,11 @@
     using System.Linq;
     using Twitter.Web.ViewModels.Users;
     using InputModels;
+    using AutoMapper.QueryableExtensions;
     using Twitter.Web.ViewModels.Tweets;
     using System.Web.Mvc;
     using System;
     using Microsoft.AspNet.Identity;
-    using System.Collections.Generic;
-    using PagedList;
-    using AutoMapper;
 
     [Authorize]
     public class UsersController : BaseController
@@ -38,12 +36,17 @@
                .Where(u => u.UserName == username)
                .Select(UserViewModel.ViewModel)
                .FirstOrDefault();
-
-            if (user == null)
+            if (username != null)
             {
-                //return this.HttpNotFound("User does not exist");
-                return this.RedirectToAction("PageNotFound", "Home");
+                if (user == null)
+                {
+                    //return this.HttpNotFound("User does not exist");
+                    return this.RedirectToAction("PageNotFound", "Home");
+                }
+
+                return this.View(user);
             }
+            
 
             ViewBag.CurrentUser = user;
             ViewBag.UserViewingThePageName = this.UserProfile.UserName;
@@ -62,12 +65,12 @@
                 
                 //ViewBag.UserIsFollowing = userIsFollowing;
 
-            var tweets = this.Data.Tweets.All()
-                .Where(t => t.AuthorId == user.Id)
-                .Select(TweetViewModel.ViewModel)
-                .OrderByDescending(t => t.TakenDate);
+            //var tweets = this.Data.Tweets.All()
+            //    .Where(t => t.AuthorId == user.Id)
+            //    .Select(TweetViewModel.ViewModel)
+            //    .OrderByDescending(t => t.TakenDate);
 
-            return this.View(tweets);
+            return this.View(user);
         }
 
         public ActionResult MyProfile()

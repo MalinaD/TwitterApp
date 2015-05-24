@@ -26,15 +26,24 @@
         // GET: Tweets
         public ActionResult Index()
         {
-            var tweets = db.Tweets.Include(t  => t.Author);
+           // var tweets = this.Data.Tweets
+            //    .Select(TweetViewModel.ViewModel)
+           //     .OrderByDescending(t => t.TakenDate);
+            //.Include(t => t.AuthorId); //.All()
+                //.Include(t  => t.Author)
+                //.Select(TweetViewModel.ViewModel)
+                //.OrderByDescending(t => t.TakenDate);
 
-            if (tweets == null)
-            {
-                return this.RedirectToAction("PageNotFound", "Home");
+            //if (tweets == null)
+            //{
+            //    return this.RedirectToAction("PageNotFound", "Home");
                 
-            }
+            //}
 
-                return this.View(tweets);
+            //return this.View(tweets);
+
+            ViewBag.Message = "Tweets";
+            return this.View();
         }
 
         //GET : Tweets/Details/id
@@ -45,10 +54,10 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var tweet = //db.Tweets.Find(id);
-                (from tweet in db.Tweets
-                          where tweet.Id == id
-                         select tweet).Take(1).ToList();
+            var tweet = db.Tweets.Find(id);
+                //(from tweet in db.Tweets
+                //          where tweet.Id == id
+                //         select tweet).Take(1).ToList();
                 
 
             if (tweet == null)
