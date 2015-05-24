@@ -1,18 +1,17 @@
 ﻿namespace Twitter.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Net;
-    using System.Web;
-    using System.Web.Mvc;
     using Microsoft.AspNet.Identity;
-    using Twitter.Data;
+    using System;
+    using System.Web.Mvc;
+    using System.Linq;
+    using System.Data.Entity;
     using Twitter.Models;
+    using Twitter.Data;
     using Twitter.Web.ViewModels.Tweets;
+    using Twitter.Web.ViewModels;
+    using System.Net;
 
+    [Authorize]
     public class TweetsController : BaseController
     {
         private TwitterContext db = new TwitterContext();
@@ -23,35 +22,19 @@
 
         }
 
+
         // GET: Tweets
         public ActionResult Index()
         {
-            var tweet = this.Data.Tweets.All()
-              // .Where(x => x.Author.UserName == username)
-              .Include(x => x.Author)
-               .Select(TweetViewModel.ViewModel)
-               .FirstOrDefault();
+            var tweets = db.Tweets.Include(t  => t.Author);
 
-            if (tweet == null)
+            if (tweets == null)
             {
-                return this.HttpNotFound("Tweet does not exist");
-            }
-            else
-            {
-                var viewModel = new TweetViewModel
-                {
-                    Title = tweet.Title,
-                    Description = tweet.Description,
-                    TakenDate = tweet.TakenDate,
-                    AuthorId = tweet.AuthorId
-                };
-
-                List<TweetViewModel> viewModelList = new List<TweetViewModel>();
-                viewModelList.Add(viewModel);
-                return this.View(viewModelList.ToList());
+                return this.RedirectToAction("PageNotFound", "Home");
+                
             }
 
-
+                return this.View(tweets);
         }
 
         //GET : Tweets/Details/id
@@ -62,11 +45,15 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Tweet tweet = db.Tweets.Find(id);
+            var tweet = //db.Tweets.Find(id);
+                (from tweet in db.Tweets
+                          where tweet.Id == id
+                         select tweet).Take(1).ToList();
+                
 
             if (tweet == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("PageNotFound","Home");
             }
 
             return View(tweet);
@@ -85,32 +72,21 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(TweetViewModel model)
         {
             //return null;
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 model.AuthorId = this.User.Identity.GetUserId();
-                var tweet = new Tweet() 
+                db.Tweets.Add(new Tweet()
                 {
                     AuthorId = model.AuthorId,
-                    Title = model.Title, 
-                    TakenDate= model.TakenDate,
-                    Description = model.Description 
-                };
+                    Description = model.Description
+                });
 
-                //db.SaveChanges();
-                try
-                {
-                    this.UserProfile.Tweets.Add(tweet);
-                    this.Data.Tweets.Add(tweet);
-                    this.Data.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    return this.RedirectToAction("Index", "Home");
-                }   
+                    db.SaveChanges();
+   
                 this.TempData["message"] = "Tweet added successfylly.";
                 this.TempData["isMessageSuccess"] = true;
 
@@ -120,8 +96,8 @@
             this.TempData["message"] = "There is a problem with the creation of this tweet. Please try again later.";
             this.TempData["isMessageSuccess"] = false;
 
-            //ViewBag.AuthorId = new SelectList(db.Users, "Id", "FullName", model.AuthorId);
-            return View("Tweets/_CreateTweet", model);
+            this.ViewBag.AuthorId = new SelectList(db.Users, "Id", "FullName", model.AuthorId);
+            return View("Tweets/Create", model);
         }
 
         // GET: Tweets/Edit/5

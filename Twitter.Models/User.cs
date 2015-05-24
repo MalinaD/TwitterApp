@@ -12,7 +12,6 @@ using System;
 
     public class User : IdentityUser
     {
-        private ICollection<Certification> certifications;
         private ICollection<UserLanguage> userLanguages;
         private ICollection<Group> groups;
         private ICollection<Trend> trends;
@@ -24,15 +23,11 @@ using System;
         private ICollection<User> followers;
         private ICollection<User> followings;
 
-
-
-
         public User()
         {
             this.followers = new HashSet<User>();
             this.followings = new HashSet<User>();
             this.ContactInfo = new ContactInfo();
-            this.certifications = new HashSet<Certification>();
             this.userLanguages = new HashSet<UserLanguage>();
             this.groups = new HashSet<Group>();
             this.trends = new HashSet<Trend>();
@@ -70,13 +65,6 @@ using System;
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime DateRegister { get; set; }
-
-        public virtual ICollection<Certification> Certifications
-        {
-            get { return this.certifications; }
-            set { this.certifications = value; }
-        }
-
 
         public virtual ICollection<UserLanguage> Languages
         {

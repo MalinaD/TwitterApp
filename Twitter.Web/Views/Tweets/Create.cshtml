@@ -1,18 +1,21 @@
 ﻿@model Twitter.Models.Tweet
 
-@*@using (Html.BeginForm("Create", "Tweets", FormMethod.Post))
+@using (Html.BeginForm("Create", "Tweets", FormMethod.Post))
 {
-    @Html.EditorForModel()
-}*@
+   @Html.AntiForgeryToken()
+    <h2 class="title">Create tweet</h2>
+    <hr/>
+    <form action="Tweets/Create" method="post" class="form-group form-inline col-md-7">
+        <label for="title">Tweet Title</label>
+        <input class="input-group" type="text" name="title" value="" />
 
-<form action="/Tweets/Create" method="post">
-    <label for="title">Tweet Title</label>
-    <input id="title" type="text" name="title" value="" />
+        <label for="description">Tweet description</label>
+        <input class="input-group" type="text" name="description" value="" />
 
-    <label for="description">Tweet description</label>
-    <input id="description" type="text" name="description" value="" />
+        <br/>
+        <input type="submit" name="submit" value="Create Post" class="btn btn-info" />
+    </form>
 
+}
 
-    <input type="submit" name="submit" value="Create Post" />
-</form>
 

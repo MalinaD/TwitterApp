@@ -6,6 +6,10 @@
         Bulgaria,
         Italy,
         England,
-        Russia
+        Russia,
+        Spain,
+        USA,
+        Australia,
+        Austria
     }
 }

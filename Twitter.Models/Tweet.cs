@@ -7,12 +7,7 @@
 
     public class Tweet
     {
-        private ICollection<Trend> trends;
-
-        public Tweet()
-        {
-            this.trends = new HashSet<Trend>();
-        }
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -30,16 +25,9 @@
 
         public string AuthorId { get; set; }
 
-        [Required]
-        [ForeignKey("AuthorId")]
+        
         public virtual User Author { get; set; }
 
-        public virtual ICollection<Trend> Trends
-        {
-            get { return this.trends; }
-            set { this.trends = value; }
-        }
 
-        //Every tweet should have favorite, retweet, report, reply and share buttons.
     }
 }

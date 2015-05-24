@@ -9,7 +9,7 @@
     using System.Web.Routing;
     using System.Web;
 
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         private ITwitterData data;
         private User userProfile;
@@ -19,22 +19,23 @@
             this.Data = data;
         }
 
+
         protected BaseController(ITwitterData data, User userProfile)
             :this(data)
         {
             this.UserProfile = userProfile;
         }
 
-        protected ITwitterData Data 
-        {
-            get { return this.data; }
-            private set { this.data = value; }
-        }
-        protected User UserProfile
-        {
-            get { return this.userProfile; }
-            private set { this.userProfile = value; }
-        }
+        protected ITwitterData Data { get; private set; }
+        //{
+        //    get { return this.data; }
+        //    private set { this.data = value; }
+        //}
+        protected User UserProfile { get; private set; }
+        //{
+        //    get { return this.userProfile; }
+        //    private set { this.userProfile = value; }
+        //}
 
         protected string ConvertImageToBase64String(HttpPostedFileBase image)
         {

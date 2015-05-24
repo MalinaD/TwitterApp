@@ -5,6 +5,8 @@
 }
 
 <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 <h2>@ViewBag.Title.</h2>
 
@@ -20,21 +22,21 @@
         @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
          
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Username, new { @class = "form-control username" })
+            @Html.TextBoxFor(m => m.Username, new { @class = "username"})
 
             
-                @if (Model.Username.Length != 0)
-                {
+                @*@if (Model.Username.Length != 0)
+                {*@
 
-                        @Ajax.BeginForm("CheckForDuplication", "Users",
-                        new AjaxOptions
-                            {
-                                InsertionMode = InsertionMode.Replace,
-                                UpdateTargetId = "username-exists"
-                            })
-                        <span id="username-exists"></span>
+                        @*@Ajax.BeginForm("UserChange", "Account",
+    new AjaxOptions
+             {
+                 InsertionMode = InsertionMode.Replace,
+                 UpdateTargetId = "status"
+             })*@
+                        <span class="status"></span>
 
-                }
+                @*}*@
             
         </div>
     </div>
@@ -74,21 +76,27 @@
     @Scripts.Render("~/bundles/jqueryval")
 
 
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 <script>
-    $('#btnAjax').click(function ajaxCall() {
+    $().click(function UserCheck() {
         $.ajax({
             url: '/Account/Register',
             contentType: 'application/html; charset=utf-8',
-            type: 'GET',
+            type: 'POST',
             dataType: 'html'
 
         })
         .success(function (result) {
-            $('#products').html(result);
-            $('#changePriceDiv').show().appendTo($('#products'));
+            $('#status').html("Checking ...." );
+            $.post("user/check",
+                {username: $("#username").val()},
+                function (data) {
+                    if (data == 0) {
+                        $("#status").html("Available");
+                    } else {
+                        $("#status").html("Taken");
+                    }
+                })
         })
         .error(function (xhr, status) {
             alert(status);

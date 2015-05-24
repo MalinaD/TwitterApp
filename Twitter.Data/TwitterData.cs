@@ -22,10 +22,6 @@
             get { return this.GetRepository<User>(); }
         }
 
-        public IRepository<Certification> Certifications
-        {
-            get { return this.GetRepository<Certification>(); }
-        }
 
         public IRepository<Discussion> Discussions
         {

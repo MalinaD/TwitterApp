@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,8 +10,6 @@ using Twitter.Web.Models;
 using Twitter.Models;
 using Twitter.Data;
 using System.Web.Security;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Twitter.Web.Controllers
 {
@@ -189,20 +185,24 @@ namespace Twitter.Web.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> CheckForDuplication(string username)
+        [HttpPost]
+        public JsonResult check(string username)
         {
-            IList<User> users = db.Users.ToArray();
-            User user = users
-               .Where(u => u.UserName == username).Single();
+            var user = Membership.GetUser(username);
+            return Json(user == null);
 
-            if (user != null)
-            {
-                return Json("Sorry, this name already exists", JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
+            //IList<User> users = db.Users.ToArray();
+            //var user = users
+            //   .Where(u => u.UserName == username).Single();
+
+            //if (user != null)
+            //{
+            //    return Json("Sorry, this name already exists", JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //{
+            //    return Json(true, JsonRequestBehavior.AllowGet);
+            //}
         }
 
         ////search for users in db

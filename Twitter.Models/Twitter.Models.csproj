@@ -71,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministrationLog.cs" />
-    <Compile Include="Certification.cs" />
     <Compile Include="ContactInfo.cs" />
     <Compile Include="Discussion.cs" />
     <Compile Include="Group.cs" />

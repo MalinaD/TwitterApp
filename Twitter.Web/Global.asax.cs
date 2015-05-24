@@ -19,8 +19,10 @@ namespace Twitter.Web
 
             ViewEnginesConfig.RegisterViewEngines(ViewEngines.Engines);
 
-            var autoMapperConfig = new AutoMapperConfig();
-            autoMapperConfig.Execute();
+            Twitter.Web.App_Start.AutoMapperConfig.RegisterMappings();
+           
+            //var autoMapperConfig = new AutoMapperConfig();
+            //autoMapperConfig.Execute();
         }
     }
 }

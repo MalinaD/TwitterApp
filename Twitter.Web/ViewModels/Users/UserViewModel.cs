@@ -9,22 +9,27 @@
     using Twitter.Web.ViewModels.Tweets;
     using Twitter.Web.ViewModels.Common;
     using System.Web.Mvc;
+    using Mappings;
 
-    public class UserViewModel
+    public class UserViewModel : IMapFrom<User>
     {
+
         public static Expression<Func<User, UserViewModel>> ViewModel
         {
             get
             {
                 return x => new UserViewModel
                 {
+                    Id = x.Id,
                     UserName = x.UserName,
                     AvatarUrl = x.AvatarUrl,
                     ContactInfo = x.ContactInfo,
                     FullName = x.FullName,
                     Summary = x.Summary,
                     Email = x.Email,
-                    DateRegister = x.DateRegister//,
+                    DateRegister = x.DateRegister,
+                    FollowersCount = x.Followers.Count,
+                    FollowingCount = x.Following.Count
                     //Tweets = x.Tweets.AsQueryable().Select(TweetViewModel.ViewModel),
                     //Languages = x.Languages.AsQueryable().Select(LanguageViewModel.ViewModel)
                 };
@@ -35,7 +40,7 @@
 
         [Display(Name = "Username")]
         [StringLength(20, MinimumLength= 4, ErrorMessage = "The username should be at least 4 symbols long.")]
-        [Remote("CheckForDuplication","Validation")]
+        [Remote("check", "Account", HttpMethod = "POST", ErrorMessage = "Username already taken")]
         public string UserName { get; set; }
 
         [Display(Name = "Fullname")]
@@ -49,15 +54,9 @@
 
         public ContactInfo ContactInfo { get; set; }
 
-        public ICollection<TweetViewModel> Tweets { get; set; }
-        public ICollection<TweetViewModel> FavoritedTweets { get; set; }
-        public ICollection<TweetViewModel> RetweetedTweets { get; set; }
+        public int FollowersCount { get; set; }
 
-        public ICollection<LanguageViewModel> Languages { get; set; }
-
-        public virtual ICollection<UserViewModel> Followers { get; set; }
-
-        public virtual ICollection<UserViewModel> Followings { get; set; }
+        public int FollowingCount { get; set; }
         
     }
 }

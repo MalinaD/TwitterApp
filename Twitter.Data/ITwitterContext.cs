@@ -5,7 +5,6 @@
 
     public interface ITwitterContext
     {
-         IDbSet<Certification> Certifications { get; set; }
 
          IDbSet<Discussion> Discussions { get; set; }
 

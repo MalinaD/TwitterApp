@@ -7,7 +7,6 @@
     {
         IRepository<User> Users { get; }
 
-        IRepository<Certification> Certifications { get; }
 
         IRepository<Discussion> Discussions { get; }
 

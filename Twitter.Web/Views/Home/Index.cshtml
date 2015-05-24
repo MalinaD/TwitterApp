@@ -1,11 +1,4 @@
-﻿@using Microsoft.AspNet.Identity;
-@using PagedList;
-@using PagedList.Mvc;
-
-@*@model  IEnumerable<Twitter.Models.Tweet>*@
-@model PagedList.IPagedList<Twitter.Web.ViewModels.Tweets.TweetViewModel>
-
-
+﻿
 @{
     ViewBag.Title = "Home";
 }
@@ -13,43 +6,9 @@
 <div class="jumbotron">
     <h1>Twitter</h1>
     <p class="lead">ASP.NET MVC Web Application.</p>
-</div>
-
-
-
-<div class="row home-container">
-    @*LEFT SIDE BAR*@
-    <div class="user-panel-container col-md-3">
-    </div>
-    @*CENTER PAGE WITH TWITTS*@
-    <div class="home-page-twitts-containter col-md-6">
-        @Html.DisplayForModel()
-@if (this.User.Identity.IsAuthenticated) {
-    @Html.DisplayForModel()
-    if (@Model.Count == 0)
-    {
-        <div class="center"><h4 class="text-center">You're not following anyone yet.</h4></div>
-    }
-    else
-    {
-        @*PAGINATION*@
-        <div class="center">
-            @Html.PagedListPager(Model, id => Url.Action("Index", new { id }))
-        </div>
-    }
-
-}
-
-        <p>
-            @Html.ActionLink("Back to List", "Index")
-        </p>
     
-}
-    @*RIGHT SIDE BAR*@
-    <div class="left-panel-container col-md-3">
-        @Html.Partial("_RightSidePanelPartial")
-    </div>
 </div>
+
 
 
 

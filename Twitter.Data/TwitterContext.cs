@@ -20,8 +20,6 @@ namespace Twitter.Data
             return new TwitterContext();
         }
 
-        public IDbSet<Certification> Certifications { get; set; }
-
         public IDbSet<Discussion> Discussions { get; set; }
 
         public IDbSet<Tweet> Tweets { get; set; }

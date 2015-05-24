@@ -3,12 +3,14 @@
     using Twitter.Data;
     using System.Linq;
     using Twitter.Web.ViewModels.Users;
+    using InputModels;
     using Twitter.Web.ViewModels.Tweets;
     using System.Web.Mvc;
     using System;
     using Microsoft.AspNet.Identity;
     using System.Collections.Generic;
     using PagedList;
+    using AutoMapper;
 
     [Authorize]
     public class UsersController : BaseController
@@ -21,53 +23,51 @@
         {
 
         }
-        // GET: Users
-        public ActionResult Index(string username, int? pageSize)
+
+        // GET: Users/{username}
+        [HttpGet]
+        public ActionResult Index(string username)
         {
             if (String.IsNullOrEmpty(username) && User.Identity.IsAuthenticated)
             {
                 username = User.Identity.GetUserName();
             }
 
-            var userProfile = this.Data.Users.All()
-               .Where(x => x.UserName == username)
+            var user = this.Data.Users
+               .All()
+               .Where(u => u.UserName == username)
                .Select(UserViewModel.ViewModel)
                .FirstOrDefault();
 
-            if (userProfile == null)
+            if (user == null)
             {
                 //return this.HttpNotFound("User does not exist");
                 return this.RedirectToAction("PageNotFound", "Home");
             }
 
-            ViewBag.CurrentUser = userProfile;
+            ViewBag.CurrentUser = user;
+            ViewBag.UserViewingThePageName = this.UserProfile.UserName;
+            ViewBag.UserViewingThePageId = this.UserProfile.Id;
+
             //ViewBag.DisplayButtons = false;
            // ViewBag.UserIsFollowing = false;
-
-            if (User.Identity.IsAuthenticated)
-            {
-                ViewBag.DisplayButtons = (this.UserProfile.Id != userProfile.Id);
+          //ViewBag.DisplayButtons = (this.UserProfile.Id != userProfile.Id);
 
                 //TODO following users
 
-                List<string> listOfFollowingUsers = this.UserProfile.Following.Select(f => f.UserName)
-                    .ToList();
+                //List<string> listOfFollowingUsers = this.UserProfile.Following.Select(f => f.UserName)
+                //    .ToList();
 
-                bool userIsFollowing = listOfFollowingUsers.Contains(username) ? true : false;
+                //bool userIsFollowing = listOfFollowingUsers.Contains(username) ? true : false;
                 
-                ViewBag.UserIsFollowing = userIsFollowing;
-            }
+                //ViewBag.UserIsFollowing = userIsFollowing;
 
-            var userTweets = this.Data.Tweets.All()
-               .Select(TweetViewModel.ViewModel)
-               .Where(t => t.AuthorId == userProfile.Id)
-               .OrderByDescending(t => t.TakenDate);
+            var tweets = this.Data.Tweets.All()
+                .Where(t => t.AuthorId == user.Id)
+                .Select(TweetViewModel.ViewModel)
+                .OrderByDescending(t => t.TakenDate);
 
-            int sizeOfPage = PAGE_SIZE;
-            int pageNumber = pageSize ?? 1;
-
-            PagedList<TweetViewModel> model = new PagedList<TweetViewModel>(userTweets, pageNumber, sizeOfPage);
-            return this.View(model);
+            return this.View(tweets);
         }
 
         public ActionResult MyProfile()
@@ -80,6 +80,30 @@
         public ActionResult GetParam(string name)
         {
             return Content(string.Format("{0} - {1}", name, DateTime.Now));
+        }
+
+        [HttpGet]
+        public ActionResult Edit()
+        {
+            var inputModel = EditUserInputModel.FromModel(this.UserProfile);
+            return this.View(inputModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditUserInputModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                var updatedUser = model.UpdateUser(this.UserProfile);
+                this.Data.Users.Update(updatedUser);
+                this.Data.SaveChanges();
+
+                //this.TempData[SystemMessageType.Information.ToString()] = "Profile updated";
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            return this.View(model);
         }
     }
 }

@@ -1,19 +1,12 @@
 ﻿@model Twitter.Models.Tweet
 
-@{
-    ViewBag.Title = "Edit";
-}
-
-<h2>Edit tweet</h2>
-
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Tweets", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Tweet</h4>
-        <br />
+        <h4 class="glyphicon-subtitles">Edit Tweet</h4>
+        <hr />
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
