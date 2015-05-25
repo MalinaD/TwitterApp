@@ -90,8 +90,10 @@
                 model.AuthorId = this.User.Identity.GetUserId();
                 db.Tweets.Add(new Tweet()
                 {
-                    AuthorId = model.AuthorId,
-                    Description = model.Description
+                    //AuthorId = model.AuthorId,
+                    Title = model.Title,
+                    Description = model.Description,
+                    TakenDate = DateTime.Now
                 });
 
                     db.SaveChanges();

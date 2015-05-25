@@ -15,7 +15,6 @@
     public class UsersController : BaseController
     {
 
-        private const int PAGE_SIZE = 10;
 
         public UsersController(ITwitterData data)
             :base(data)
@@ -25,56 +24,36 @@
 
         // GET: Users/{username}
         [HttpGet]
-        public ActionResult Index(string username)
+        [AllowAnonymous]
+        public ActionResult Index()
         {
-            if (String.IsNullOrEmpty(username) && User.Identity.IsAuthenticated)
+            var users = this.Data.Users.All().ToList();
+
+            return View(users);
+        }
+
+        [HttpGet]
+        public ActionResult ViewProfile()
+        {
+            var currentUser = this.UserProfile;
+
+            var tweets = currentUser.Tweets.ToList();
+
+            return this.View(tweets);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public JsonResult IsValid(string username)
+        {
+            if (this.Data.Users.All().FirstOrDefault(u => u.UserName.Equals(username)) != null)
             {
-                username = User.Identity.GetUserName();
+                return this.Json(false, JsonRequestBehavior.AllowGet);
             }
 
-            var user = this.Data.Users
-               .All()
-               .Where(u => u.UserName == username)
-               .Select(UserViewModel.ViewModel)
-               .FirstOrDefault();
-
-
-                if (username == null)
-                {
-                    //return this.HttpNotFound("User does not exist");
-                    return this.RedirectToAction("PageNotFound", "Home");
-                }
-            
-
-            ViewBag.CurrentUser = user;
-            ViewBag.UserViewingThePageName = this.UserProfile.UserName;
-            ViewBag.UserViewingThePageId = this.UserProfile.Id;
-
-            //ViewBag.DisplayButtons = false;
-           // ViewBag.UserIsFollowing = false;
-          //ViewBag.DisplayButtons = (this.UserProfile.Id != userProfile.Id);
-
-                //TODO following users
-
-                //List<string> listOfFollowingUsers = this.UserProfile.Following.Select(f => f.UserName)
-                //    .ToList();
-
-                //bool userIsFollowing = listOfFollowingUsers.Contains(username) ? true : false;
-                
-                //ViewBag.UserIsFollowing = userIsFollowing;
-
-            //var tweets = this.Data.Tweets.All()
-            //    .Where(t => t.AuthorId == user.Id)
-            //    .Select(TweetViewModel.ViewModel)
-            //    .OrderByDescending(t => t.TakenDate);
-
-            return this.View(user);
+            return this.Json(true, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult MyProfile()
-        {
-            return this.Redirect("/User/mimi");
-        }
 
         [OutputCache(Duration = 60)]
         [Authorize]

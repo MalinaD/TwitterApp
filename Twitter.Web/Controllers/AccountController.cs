@@ -41,6 +41,19 @@ namespace Twitter.Web.Controllers
             }
         }
 
+        //[AllowAnonymous]
+        //public JsonResult IsUsernameAvailable(string username)
+        //{
+        //    if (string.IsNullOrWhiteSpace(username))
+        //    {
+        //        return this.Json(true, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    var user = this.UserManager.FindByNameAsync(username).Result;
+
+        //    return this.Json(user == null, JsonRequestBehavior.AllowGet);
+        //}
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -185,25 +198,28 @@ namespace Twitter.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public JsonResult check(string username)
-        {
-            var user = Membership.GetUser(username);
-            return Json(user == null);
 
-            //IList<User> users = db.Users.ToArray();
-            //var user = users
-            //   .Where(u => u.UserName == username).Single();
 
-            //if (user != null)
-            //{
-            //    return Json("Sorry, this name already exists", JsonRequestBehavior.AllowGet);
-            //}
-            //else
-            //{
-            //    return Json(true, JsonRequestBehavior.AllowGet);
-            //}
-        }
+
+        //[HttpPost]
+        //public JsonResult check(string username)
+        //{
+        //    var user = Membership.GetUser(username);
+        //    return Json(user == null);
+
+        //    //IList<User> users = db.Users.ToArray();
+        //    //var user = users
+        //    //   .Where(u => u.UserName == username).Single();
+
+        //    //if (user != null)
+        //    //{
+        //    //    return Json("Sorry, this name already exists", JsonRequestBehavior.AllowGet);
+        //    //}
+        //    //else
+        //    //{
+        //    //    return Json(true, JsonRequestBehavior.AllowGet);
+        //    //}
+        //}
 
         ////search for users in db
         //public async Task<ActionResult>  RemoteValidation (User us)

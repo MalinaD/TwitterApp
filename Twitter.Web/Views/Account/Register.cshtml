@@ -4,9 +4,6 @@
     ViewBag.Title = "Register";
 }
 
-<script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 <h2>@ViewBag.Title.</h2>
 
@@ -16,29 +13,16 @@
     
     <h4>Create a new account.</h4>
     <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.ValidationSummary(string.Empty, new { @class = "text-danger" })
    
      <div class="form-group">
         @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
          
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Username, new { @class = "username"})
-
-            
-                @*@if (Model.Username.Length != 0)
-                {*@
-
-                        @*@Ajax.BeginForm("UserChange", "Account",
-    new AjaxOptions
-             {
-                 InsertionMode = InsertionMode.Replace,
-                 UpdateTargetId = "status"
-             })*@
-                        @*<span class="status"></span>*@
-
-                @*}*@
-            
+            @Html.TextBoxFor(m => m.Username, new { id="username", @class = "form-control" })
+            <div class="text-danger" id="statusError"></div>
         </div>
+         
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Fullname, new { @class = "col-md-2 control-label" })
@@ -75,55 +59,35 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
+<script>
+    (function () {
+        $('#username').on('keyup', function () {
+            var username = $(this).val().trim();
 
+            setTimeout(update, 1000, username);
+        });
 
-@*<script>
-    $().click(function UserCheck() {
-        $.ajax({
-            url: '/Account/Register',
-            contentType: 'application/html; charset=utf-8',
-            type: 'POST',
-            dataType: 'html'
+        function update(username) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/Users/IsValid?username=" + username, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = xhr.responseText;
 
-        })
-        .success(function (result) {
-            $('#status').html("Checking ...." );
-            $.post("user/check",
-                {username: $("#username").val()},
-                function (data) {
-                    if (data == 0) {
-                        $("#status").html("Available");
+                    if (response === "false") {
+                        $("#statusError").html("<p>Username '" + username + "' is already taken!</p>");
                     } else {
-                        $("#status").html("Taken");
+                        $("#statusError").html("");
                     }
-                })
-        })
-        .error(function (xhr, status) {
-            alert(status);
-        })
-    }
-    );
 
+                    console.log(response + " " + typeof (response));
+                }
+            }
+            xhr.send();
+        }
 
-    $('#btnChangePrice').click(function () {
-        var idVal = $('#txtId').val();
-        var newPriceVal = $('#txtPrice').val();
-        $.ajax({
-            url: '/Home/ChangeProductPrice',
-            contentType: 'application/html; charset=utf-8',
-            data: { id: idVal, newPrice: newPriceVal },
-            type: 'GET',
-            dataType: 'html'
-
-        })
-        .success(function (result) {
-            $('#products').html(result);
-        })
-        .error(function (xhr, status) {
-            alert(status);
-        })
-    });
-</script>*@
+    }());
+</script>
 
 
 

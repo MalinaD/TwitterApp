@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Twitter.Models.Tweet>
+﻿@model IEnumerable<Twitter.Web.ViewModels.Tweets.TweetViewModel>
 
 @{
     ViewBag.Title = "Tweets home";
@@ -10,7 +10,7 @@
     <tr>
         <th>
             @*@Html.DisplayNameFor(model => model.AuthorId)*@
-            Author
+            Title
         </th>
         <th>
             @*@Html.DisplayNameFor(model => model.Description)*@
@@ -27,7 +27,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(model => item.Author.UserName)
+                @Html.DisplayFor(model => item.Title)
             </td>
             <td>
                 @Html.DisplayFor(model => item.Description)
@@ -38,12 +38,12 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })|
-                @Html.ActionLink("Favourite", "Favourite", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @*@Html.ActionLink("Favourite", "Favourite", new { id = item.Id }) |
                 @Html.ActionLink("Retweet", "Retweet", new { id = item.Id }) |
                 @Html.ActionLink("Report", "Report", new { id = item.Id })|
                 @Html.ActionLink("Reply", "Reply", new { id = item.Id }) |
-                @Html.ActionLink("Share", "Share", new { id = item.Id })
+                @Html.ActionLink("Share", "Share", new { id = item.Id })*@
             </td>
         </tr>
     }
