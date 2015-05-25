@@ -10,6 +10,7 @@
     using Twitter.Web.ViewModels.Tweets;
     using Twitter.Web.ViewModels;
     using System.Net;
+    using System.Collections.Generic;
 
     [Authorize]
     public class TweetsController : BaseController
@@ -29,8 +30,8 @@
             return View();
         }
         
-        //public ActionResult Index()
-        //{
+        public ActionResult Index()
+        {
         //   // var tweets = this.Data.Tweets
         //    //    .Select(TweetViewModel.ViewModel)
         //   //     .OrderByDescending(t => t.TakenDate);
@@ -49,7 +50,30 @@
 
         //    ViewBag.Message = "Tweets";
         //    return this.View();
-        //}
+
+             List<Tweet> tweets = new List<Tweet>();
+
+            if (this.UserProfile != null)
+            {
+                if (this.UserProfile.Following.Count <= 0)
+                {
+                    tweets = this.Data.Tweets.All().ToList();
+                }
+                else
+                {
+                    foreach (var user in this.UserProfile.Following)
+                    {
+                        tweets.AddRange(user.Tweets);
+                    }
+                }
+            }
+            else
+            {
+                tweets = this.Data.Tweets.All().ToList();
+            }
+
+            return View(tweets);
+        }
 
         //GET : Tweets/Details/id
         public ActionResult Details(int? id)

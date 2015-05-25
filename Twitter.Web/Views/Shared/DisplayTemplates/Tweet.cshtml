@@ -16,7 +16,7 @@
                     <span class="col-xs-6">@Model.TakenDate</span>
                     <span class="col-xs-6">Reports: @Model.Reports</span>
                 </div>
-                @Html.ActionLink("Share", "Share", "Tweets", null, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Retweet", "Retweet", "Tweets", null, new { @class = "btn btn-primary" })
                 @Html.ActionLink("Favorite", "Favorite", "Tweets", new { tweetId = Model.Id }, new { @class = "btn btn-primary" })
                 @Html.ActionLink("Report", "Report", "Tweets", new { tweetId = Model.Id }, new { @class = "btn btn-primary" })
                 @Html.ActionLink("Reply", "Reply", "Replies", new { tweetId = Model.Id }, new { @class = "btn btn-primary" })

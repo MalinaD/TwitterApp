@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Twitter.Web.ViewModels.Tweets.TweetViewModel>
+﻿@using WebGrease.Css.Extensions
+
+@model IEnumerable<Twitter.Models.Tweet>
 
 @{
     ViewBag.Title = "Tweets home";
@@ -36,14 +38,14 @@
                 @Html.DisplayFor(model => item.TakenDate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                @*@Html.ActionLink("Favourite", "Favourite", new { id = item.Id }) |
-                @Html.ActionLink("Retweet", "Retweet", new { id = item.Id }) |
-                @Html.ActionLink("Report", "Report", new { id = item.Id })|
-                @Html.ActionLink("Reply", "Reply", new { id = item.Id }) |
-                @Html.ActionLink("Share", "Share", new { id = item.Id })*@
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id , @class = "btn btn-default"}) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id, @class = "btn btn-default" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id, @class = "btn btn-default" }) |
+                @Html.ActionLink("Favourite", "Favourite", new { id = item.Id, @class = "btn btn-default" }) |
+                @Html.ActionLink("Retweet", "Retweet", new { id = item.Id, @class = "btn btn-default" }) |
+                @Html.ActionLink("Report", "Report", new { id = item.Id, @class = "btn btn-default" })|
+                @Html.ActionLink("Reply", "Reply", new { id = item.Id, @class = "btn btn-default" }) |
+                @Html.ActionLink("Share", "Share", new { id = item.Id, @class = "btn btn-default" })
             </td>
         </tr>
     }

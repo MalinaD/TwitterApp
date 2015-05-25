@@ -76,6 +76,9 @@
     <Compile Include="Group.cs" />
     <Compile Include="GroupType.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageStatus.cs" />
+    <Compile Include="Notification.cs" />
     <Compile Include="Trend.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -24,42 +24,20 @@
        
         public ActionResult Index()
         {
-            //if (this.User.Identity.IsAuthenticated)
-            //{
-            //    //this.ViewBag.UserName = this.UserProfile.UserName;
-            //    ViewBag.Message = "This is my version of Twitter app maked with ASP.NET MVC";
-            //    //return this.RedirectToAction("Index", "Home");
-            //}
-            //else
-            //{
-            //   // return this.RedirectToAction("PageError", "Home");
-            //}
-
-            
-            //return this.View();
-
-            List<Tweet> tweets = new List<Tweet>();
-
-            if (this.UserProfile != null)
+            if (this.User.Identity.IsAuthenticated)
             {
-                if (this.UserProfile.Following.Count <= 0)
-                {
-                    tweets = this.Data.Tweets.All().ToList();
-                }
-                else
-                {
-                    foreach (var user in this.UserProfile.Following)
-                    {
-                        tweets.AddRange(user.Tweets);
-                    }
-                }
+                //this.ViewBag.UserName = this.UserProfile.UserName;
+                ViewBag.Message = "This is my version of Twitter app maked with ASP.NET MVC";
+                //return this.RedirectToAction("Index", "Home");
             }
-            else
-            {
-                tweets = this.Data.Tweets.All().ToList();
-            }
+           // else
+           // {
+                // return this.RedirectToAction("PageError", "Home");
+          //  }
 
-            return View(tweets);
+
+            return this.View();
+                       
         }
 
         public ActionResult About()
@@ -101,12 +79,12 @@
 
         }
 
-          //[HttpGet]
-          //public ActionResult Tweets()
-          //{
-          //    ViewBag.Message = "Tweets";
-          //    return this.View();
-          //}
+          [HttpGet]
+          public ActionResult Tweets()
+          {
+              ViewBag.Message = "Tweets";
+              return this.View();
+          }
 
         [HttpGet]
         public ActionResult PageNotFound()

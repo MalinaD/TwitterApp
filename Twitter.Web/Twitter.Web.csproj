@@ -230,8 +230,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\NotificationsHub.cs" />
     <Compile Include="InputModels\EditUserInputModel.cs" />
     <Compile Include="Mappings\AutoMapperConfig.cs" />
+    <Compile Include="Repository\MessagesRepository.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\Common\LanguageViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -321,13 +323,12 @@
     <Content Include="Views\Shared\DisplayTemplates\Tweet.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\User.cshtml" />
     <Content Include="Views\Users\ViewProfile.cshtml" />
-    <Content Include="Views\Tweets\New.cshtml" />
+    <Content Include="Views\Notifications\_MessagesListView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Messages\" />
-    <Folder Include="Views\Notifications\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

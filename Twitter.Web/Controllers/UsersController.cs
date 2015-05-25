@@ -37,9 +37,9 @@
         {
             var currentUser = this.UserProfile;
 
-            var tweets = currentUser.Tweets.ToList();
+            //var tweets = currentUser.Tweets.ToList();
 
-            return this.View(tweets);
+            return this.View(currentUser);
         }
 
         [AllowAnonymous]
