@@ -1,0 +1,14 @@
+﻿@model Twitter.Models.User
+
+<div>
+    @Ajax.ActionLink(Model.UserName, "GetUserInfo", "Users", new { userId = Model.Id }, new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = string.Format("user-{0}-info", Model.Id),
+        InsertionMode = InsertionMode.Replace,
+        OnComplete = "loadData"
+    }, new { @class = "hover-info" })
+    <div id="user-@Model.Id-info" hidden=""></div>
+
+    @Html.ActionLink("Follow", "Follow", "Users", new { userId = @Model.Id }, new { @class = "btn btn-default" })
+</div>

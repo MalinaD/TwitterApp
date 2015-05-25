@@ -1,13 +1,24 @@
-﻿@using Microsoft.AspNet.Identity;
+﻿
+@using WebGrease.Css.Extensions
+
+@model IEnumerable<Twitter.Models.Tweet>
 
 @{
     ViewBag.Title = "Home";
 }
 
-<div class="jumbotron">
-    <h1>Twitter</h1>
-    <p class="lead">ASP.NET MVC Web Application.</p>
-    
+@*<div class="jumbotron">
+        <h1>Twitter</h1>
+        <p class="lead">ASP.NET MVC Web Application.</p>
+
+    </div>*@
+
+@Html.DisplayForModel()
+
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
 </div>
 
 

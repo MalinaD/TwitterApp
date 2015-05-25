@@ -1,0 +1,17 @@
+﻿@model Twitter.Web.ViewModels.Tweets.TweetViewModel
+
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>Post New Tweet</h2>
+
+@using (Html.BeginForm("Create", "Tweets", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.EditorFor(m => m.Title)
+    @Html.EditorFor(m => m.Description)
+
+    <input type="submit" value="Tweet!" />
+}
+

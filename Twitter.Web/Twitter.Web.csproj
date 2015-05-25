@@ -318,6 +318,10 @@
     <Content Include="Views\Home\PageNotFound.cshtml" />
     <Content Include="Views\Home\PageError.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\LanguageViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Tweet.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\User.cshtml" />
+    <Content Include="Views\Users\ViewProfile.cshtml" />
+    <Content Include="Views\Tweets\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Admin\" />

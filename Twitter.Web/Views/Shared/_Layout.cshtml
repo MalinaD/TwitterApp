@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -24,11 +25,17 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Tweets", "Tweets", "Home")</li>
-                    @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Administrator"))
+                   
+                    @if (this.User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Admin Page", "AdminPage", "Home")</li>
-                        <li>@Html.ActionLink("Create Admin role", "CreateAdminRole", "Home")</li>
+                        if (this.User.IsInRole("Administrator"))
+                        {
+                            <li>@Html.ActionLink("Admin Page", "AdminPage", "Home")</li>
+                            <li>@Html.ActionLink("Create Admin role", "CreateAdminRole", "Home")</li>
+                        }
+                        <li>@Html.ActionLink("Tweet", "Create", "Tweets")</li>
+                        <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                        <li>@Html.ActionLink("Profile", "ViewProfile", "Users", null, new { userId = User.Identity.GetUserId() })</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

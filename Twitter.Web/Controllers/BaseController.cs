@@ -5,9 +5,12 @@
     using Twitter.Models;
 
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Routing;
     using System.Web;
+    using System.Web.Mvc;
+    using Microsoft.AspNet.Identity;
 
     public abstract class BaseController : Controller
     {
@@ -20,22 +23,33 @@
         }
 
 
-        protected BaseController(ITwitterData data, User userProfile)
-            :this(data)
+        //protected BaseController(ITwitterData data, User userProfile)
+        //    :this(data)
+        //{
+        //    this.UserProfile = userProfile;
+        //}
+
+        protected ITwitterData Data 
         {
-            this.UserProfile = userProfile;
+            get { return this.data; }
+            private set { this.data = value; }
         }
 
-        protected ITwitterData Data { get; private set; }
-        //{
-        //    get { return this.data; }
-        //    private set { this.data = value; }
-        //}
-        protected User UserProfile { get; private set; }
-        //{
-        //    get { return this.userProfile; }
-        //    private set { this.userProfile = value; }
-        //}
+        protected User UserProfile
+        {
+            get
+            {
+                if (this.User != null)
+                {
+                    var currentUser = this.Data.Users.Find(this.User.Identity.GetUserId());
+                    return currentUser;
+                }
+
+                return null;
+            }
+
+           
+        }
 
         protected string ConvertImageToBase64String(HttpPostedFileBase image)
         {
@@ -55,7 +69,7 @@
                 var user = this.Data.Users.All()
                     .FirstOrDefault(x => x.UserName == username);
 
-                this.UserProfile = user;
+                //this.UserProfile = user;
                 this.ViewBag.UserProfile = user;
             }
             

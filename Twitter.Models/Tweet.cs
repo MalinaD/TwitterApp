@@ -19,6 +19,8 @@
 
         public Location Location { get; set; }
 
+        public int Reports { get; set; }
+
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime TakenDate { get; set; }

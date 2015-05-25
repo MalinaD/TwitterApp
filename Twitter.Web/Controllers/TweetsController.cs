@@ -16,35 +16,40 @@
     {
         private TwitterContext db = new TwitterContext();
 
+        // GET: Tweets
         public TweetsController(ITwitterData data)
             :base(data)
         {
 
         }
 
-
-        // GET: Tweets
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult New()
         {
-           // var tweets = this.Data.Tweets
-            //    .Select(TweetViewModel.ViewModel)
-           //     .OrderByDescending(t => t.TakenDate);
-            //.Include(t => t.AuthorId); //.All()
-                //.Include(t  => t.Author)
-                //.Select(TweetViewModel.ViewModel)
-                //.OrderByDescending(t => t.TakenDate);
-
-            //if (tweets == null)
-            //{
-            //    return this.RedirectToAction("PageNotFound", "Home");
-                
-            //}
-
-            //return this.View(tweets);
-
-            ViewBag.Message = "Tweets";
-            return this.View();
+            return View();
         }
+        
+        //public ActionResult Index()
+        //{
+        //   // var tweets = this.Data.Tweets
+        //    //    .Select(TweetViewModel.ViewModel)
+        //   //     .OrderByDescending(t => t.TakenDate);
+        //    //.Include(t => t.AuthorId); //.All()
+        //        //.Include(t  => t.Author)
+        //        //.Select(TweetViewModel.ViewModel)
+        //        //.OrderByDescending(t => t.TakenDate);
+
+        //    //if (tweets == null)
+        //    //{
+        //    //    return this.RedirectToAction("PageNotFound", "Home");
+                
+        //    //}
+
+        //    //return this.View(tweets);
+
+        //    ViewBag.Message = "Tweets";
+        //    return this.View();
+        //}
 
         //GET : Tweets/Details/id
         public ActionResult Details(int? id)
@@ -109,6 +114,20 @@
 
             this.ViewBag.AuthorId = new SelectList(db.Users, "Id", "FullName", model.AuthorId);
             return View("Tweets/Create", model);
+        }
+
+        public ActionResult Report(int tweetId)
+        {
+            var tweet = this.Data.Tweets.Find(tweetId);
+            if (tweet == null)
+            {
+
+            }
+
+            tweet.Reports++;
+            this.Data.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Tweets/Edit/5
