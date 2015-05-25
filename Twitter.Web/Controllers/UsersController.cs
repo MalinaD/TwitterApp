@@ -4,6 +4,7 @@
     using System.Linq;
     using Twitter.Web.ViewModels.Users;
     using InputModels;
+    using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Twitter.Web.ViewModels.Tweets;
     using System.Web.Mvc;
@@ -36,16 +37,13 @@
                .Where(u => u.UserName == username)
                .Select(UserViewModel.ViewModel)
                .FirstOrDefault();
-            if (username != null)
-            {
-                if (user == null)
+
+
+                if (username == null)
                 {
                     //return this.HttpNotFound("User does not exist");
                     return this.RedirectToAction("PageNotFound", "Home");
                 }
-
-                return this.View(user);
-            }
             
 
             ViewBag.CurrentUser = user;

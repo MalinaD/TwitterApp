@@ -29,9 +29,9 @@
                     Email = x.Email,
                     DateRegister = x.DateRegister,
                     FollowersCount = x.Followers.Count,
-                    FollowingCount = x.Following.Count
+                    FollowingCount = x.Following.Count,
                     //Tweets = x.Tweets.AsQueryable().Select(TweetViewModel.ViewModel),
-                    //Languages = x.Languages.AsQueryable().Select(LanguageViewModel.ViewModel)
+                    Languages = x.Languages.AsQueryable().Select(LanguageViewModel.ViewModel)
                 };
             }
         }
@@ -53,6 +53,7 @@
         public string Summary { get; set; }
 
         public ContactInfo ContactInfo { get; set; }
+        public IEnumerable<LanguageViewModel> Languages { get; set; }
 
         public int FollowersCount { get; set; }
 

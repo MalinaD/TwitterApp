@@ -27,11 +27,11 @@
             {
                 //this.ViewBag.UserName = this.UserProfile.UserName;
                 ViewBag.Message = "This is my version of Twitter app maked with ASP.NET MVC";
-                return this.RedirectToAction("Index", "Home");
+                //return this.RedirectToAction("Index", "Home");
             }
             else
             {
-                return this.RedirectToAction("PageError", "Home");
+               // return this.RedirectToAction("PageError", "Home");
             }
 
             
